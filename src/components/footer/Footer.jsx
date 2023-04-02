@@ -8,7 +8,7 @@ export default function Footer({ onClickAddToCart }) {
   return (
     <div className={styles.footer}>
       <div className={styles.cart}>
-        <img src="/cart.png" alt="" />
+        <img src="/cart.png" alt="show cart" />
         <span className={styles.text}>購物車</span>
         <span className={styles.count}>1</span>
       </div>

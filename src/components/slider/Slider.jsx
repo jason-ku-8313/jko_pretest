@@ -1,16 +1,10 @@
 import React, { useState } from "react";
+import { nanoid } from "nanoid";
 import styles from "./Slider.module.scss";
 
-export default function Slider() {
+export default function Slider({ data }) {
   const totalPage = 4;
   const [pageIdx, setPageIdx] = useState(0);
-
-  const products = [
-    "/product1.png",
-    "/product2.png",
-    "/product3.png",
-    "/product4.png",
-  ];
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -19,11 +13,11 @@ export default function Slider() {
   return (
     <div className={styles.slider}>
       <div className={styles.frame}>
-        {products.map((p, i) => (
+        {data.map((p, i) => (
           <img
-            key={i}
+            key={nanoid()}
             src={p}
-            alt=""
+            alt={`slider ${i}`}
             className={styles.slide}
             onDrag={handleDrag}
             onTouchMove={handleDrag}
