@@ -1,0 +1,21 @@
+import React from "react";
+import styles from "./Footer.module.scss";
+
+export default function Footer({ onClickAddToCart }) {
+  const handleClickAddToCart = () => {
+    onClickAddToCart();
+  };
+  return (
+    <div className={styles.footer}>
+      <div className={styles.cart}>
+        <img src="/cart.png" alt="" />
+        <span className={styles.text}>購物車</span>
+        <span className={styles.count}>1</span>
+      </div>
+      <button className={styles.addToCart} onClick={handleClickAddToCart}>
+        加入購物車
+      </button>
+      <button className={styles.buy}>直接購買</button>
+    </div>
+  );
+}

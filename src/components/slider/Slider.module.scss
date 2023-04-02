@@ -1,0 +1,32 @@
+.slider {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  max-width: 510px;
+
+  .frame {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+
+    .slide {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .pageNum {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 35px;
+      position: absolute;
+      bottom: 15px;
+      right: 10px;
+      background-color: #b3b3b3;
+      color: white;
+      border-radius: 30px;
+      opacity: 0.8;
+    }
+  }
+}

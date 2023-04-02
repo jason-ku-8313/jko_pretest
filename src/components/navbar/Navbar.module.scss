@@ -1,0 +1,30 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  color: #d2d2d2;
+  background-color: #18191d;
+  text-align: center;
+  z-index: 3;
+
+  .leftArrow {
+    margin-left: 10px;
+    line-height: 0;
+    font-size: 18px;
+  }
+
+  // For centering h1
+  &:after {
+    content: "";
+    margin-right: 10px;
+    width: 20px;
+  }
+
+  h1 {
+    margin: 0 auto;
+    font-size: 18px;
+  }
+}
