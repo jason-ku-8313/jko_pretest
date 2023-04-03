@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { nanoid } from "nanoid";
 import styles from "./Slider.module.scss";
 
+// TODO: Implement mobile friendly slider
 export default function Slider({ data }) {
   const totalPage = 4;
   const [pageIdx, setPageIdx] = useState(0);
