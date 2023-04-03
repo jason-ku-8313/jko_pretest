@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# JJOPAY Pretest
+
+## Description
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Tech Stack
 
-In the project directory, you can run:
+[React v18](https://react.dev/), [Scss](https://sass-lang.com/install) and [Create-React-App](https://github.com/facebook/create-react-app)
 
-### `npm start`
+## Demo
+- View on CodeSandbox: [Click Me](https://codesandbox.io/p/github/jason-ku-8313/jko_pretest/master?file=%2FREADME.md&workspace=%257B%2522activeFileId%2522%253A%2522clfwkan11000ig1f03c0cd1hz%2522%252C%2522openFiles%2522%253A%255B%2522%252FREADME.md%2522%255D%252C%2522sidebarPanel%2522%253A%2522EXPLORER%2522%252C%2522gitSidebarPanel%2522%253A%2522COMMIT%2522%252C%2522spaces%2522%253A%257B%2522clfzkdpcm00153b6qj59x5rk7%2522%253A%257B%2522key%2522%253A%2522clfzkdpcm00153b6qj59x5rk7%2522%252C%2522name%2522%253A%2522Default%2522%252C%2522devtools%2522%253A%255B%257B%2522key%2522%253A%2522clg0ad2lr00153b6q4z46xuqu%2522%252C%2522type%2522%253A%2522PROJECT_SETUP%2522%252C%2522isMinimized%2522%253Afalse%257D%252C%257B%2522type%2522%253A%2522PREVIEW%2522%252C%2522taskId%2522%253A%2522start%2522%252C%2522port%2522%253A3000%252C%2522key%2522%253A%2522clfzkh2hr008q3b6qzzzz21bb%2522%252C%2522isMinimized%2522%253Afalse%257D%252C%257B%2522type%2522%253A%2522TASK_LOG%2522%252C%2522taskId%2522%253A%2522start%2522%252C%2522key%2522%253A%2522clfzkgy1h004m3b6q3obdcpdv%2522%252C%2522isMinimized%2522%253Atrue%257D%255D%257D%257D%252C%2522currentSpace%2522%253A%2522clfzkdpcm00153b6qj59x5rk7%2522%252C%2522spacesOrder%2522%253A%255B%2522clfzkdpcm00153b6qj59x5rk7%2522%255D%252C%2522hideCodeEditor%2522%253Afalse%257D)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- View on Netlify: [Click Me](https://jko-pretest-shoppingmall.netlify.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Requirements
 
-### `npm test`
+- [X] 新建 npm 專案
+- [X] 照圖刻出下方 必須的 頁面 (可忽略上方手機訊號 icon，放一個黑色背景 即可)
+- [X] 模擬情境設計 mock data 的格式(假設後端尚未給 api) 5. 加入適當的操作動畫
+- [X] 使用 React 撰寫
+- [X] 不可以用任何 UI Component library (ex: Material UI, Bootstrap)。
+- [X] 實作商品細節頁
+  - [X] 顯示售價及詳細資訊
+  - [X] 產品資訊內容不一定完善
+- [X] 商品規格頁
+  - [ ] 將有庫存的商品加進購物車
+  - [X] 每種商品的規格不一定
+  - [X] 數量可以按 +/-, 或是填入數字
+  - [X] 選取後，點擊 “加入購物車”，顯示購物車的規格及數量
+- [ ] 產品列表頁 (非必須)
+  - [ ] 顯示商品名稱及價格
+  - [ ] 商品可能都賣完了，也可能有一個，也可能超多
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+```bash
+$ npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Running the app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# development
+$ npm start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# production mode
+$ npm run build
+```
 
-### `npm run eject`
+## Test
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+# unit tests
+$ npm run test
+```
