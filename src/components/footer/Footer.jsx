@@ -8,9 +8,11 @@ export default function Footer({ onClickAddToCart }) {
   return (
     <div className={styles.footer}>
       <div className={styles.cart}>
-        <img src="/cart.png" alt="show cart" />
+        <div className={styles.icon}>
+          <img src="/cart.png" alt="show cart" />
+          <span className={styles.count}>1</span>
+        </div>
         <span className={styles.text}>購物車</span>
-        <span className={styles.count}>1</span>
       </div>
       <button className={styles.addToCart} onClick={handleClickAddToCart}>
         加入購物車

@@ -6,10 +6,8 @@ import { product } from "./data";
 function App() {
   return (
     <div className={styles.app}>
-      <div className={styles.container}>
         <Navbar />
         <Product {...product} />
-      </div>
     </div>
   );
 }

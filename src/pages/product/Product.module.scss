@@ -1,30 +1,31 @@
 .product {
-  min-height: 100vh;
-  max-height: max-content;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #18191d;
 
   .container {
-    padding: 14px 12px;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 104px; // 92px for footer height
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 14px;
-    background-color: #18191d;
-
-    hr {
-      border: 0.5px solid #18191d;
-    }
+    justify-content: center;
+    gap: 12px;
 
     .top,
     .bottom {
-      width: calc(100% - 24px);
-      padding: 20px 12px;
+      width: 100%;
+      padding: 16px 12px;
       background-color: #272934;
       border-radius: 20px;
+
+      hr {
+        border: 0.5px solid #18191d;
+      }
     }
 
     .top {
