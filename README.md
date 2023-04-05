@@ -11,7 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Demo
 - View on CodeSandbox: [Click Me](https://codesandbox.io/p/github/jason-ku-8313/jko_pretest/master?file=%2FREADME.md&workspace=%257B%2522activeFileId%2522%253A%2522clfwkan11000ig1f03c0cd1hz%2522%252C%2522openFiles%2522%253A%255B%2522%252FREADME.md%2522%255D%252C%2522sidebarPanel%2522%253A%2522EXPLORER%2522%252C%2522gitSidebarPanel%2522%253A%2522COMMIT%2522%252C%2522spaces%2522%253A%257B%2522clfzkdpcm00153b6qj59x5rk7%2522%253A%257B%2522key%2522%253A%2522clfzkdpcm00153b6qj59x5rk7%2522%252C%2522name%2522%253A%2522Default%2522%252C%2522devtools%2522%253A%255B%257B%2522key%2522%253A%2522clg0ad2lr00153b6q4z46xuqu%2522%252C%2522type%2522%253A%2522PROJECT_SETUP%2522%252C%2522isMinimized%2522%253Afalse%257D%252C%257B%2522type%2522%253A%2522PREVIEW%2522%252C%2522taskId%2522%253A%2522start%2522%252C%2522port%2522%253A3000%252C%2522key%2522%253A%2522clfzkh2hr008q3b6qzzzz21bb%2522%252C%2522isMinimized%2522%253Afalse%257D%252C%257B%2522type%2522%253A%2522TASK_LOG%2522%252C%2522taskId%2522%253A%2522start%2522%252C%2522key%2522%253A%2522clfzkgy1h004m3b6q3obdcpdv%2522%252C%2522isMinimized%2522%253Atrue%257D%255D%257D%257D%252C%2522currentSpace%2522%253A%2522clfzkdpcm00153b6qj59x5rk7%2522%252C%2522spacesOrder%2522%253A%255B%2522clfzkdpcm00153b6qj59x5rk7%2522%255D%252C%2522hideCodeEditor%2522%253Afalse%257D)
 
-- View on Netlify: [Click Me](https://jko-pretest-shoppingmall.netlify.app/)
+- View on Netlify: [Click Me](https://jko-pretest-shoppingmall.netlify.app/) (Deploying from branch `v2`)
 
 ## Requirements
 
