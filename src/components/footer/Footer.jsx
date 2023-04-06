@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./Footer.module.scss";
+import cart from "../../assets/cart.png";
 
-export default function Footer({ onClickAddToCart }) {
+export default function Footer({ cartItemCount, onClickAddToCart }) {
   const handleClickAddToCart = () => {
     onClickAddToCart();
   };
@@ -9,8 +10,8 @@ export default function Footer({ onClickAddToCart }) {
     <div className={styles.footer}>
       <div className={styles.cart}>
         <div className={styles.icon}>
-          <img src="/cart.png" alt="show cart" />
-          <span className={styles.count}>1</span>
+          <img src={cart} alt="show cart" />
+          <span className={styles.count}>{cartItemCount}</span>
         </div>
         <span className={styles.text}>購物車</span>
       </div>

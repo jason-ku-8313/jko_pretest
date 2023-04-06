@@ -1,46 +1,98 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { nanoid } from "nanoid";
 import styles from "./ProductPanel.module.scss";
 
-export default function ProductPanel({ isOpen, onClose, data }) {
-  const [selectedSpecs, setSelectedSpec] = useState({});
+export default function ProductPanel({
+  isOpen,
+  onClose,
+  data,
+  defaultSpec,
+  onAddToCart,
+}) {
+  const [selectedSpecId, setSelectedSpecId] = useState(defaultSpec);
+  const { specCategories, specs } = data;
+  const [selectedSpecs, setSelectedSpecs] = useState([
+    ...specs.find(({ id }) => id === defaultSpec).labels,
+  ]);
   const [quantity, setQuantity] = useState(1);
-  const { name, specs, stocks, cover } = data;
 
   const handleClickSpec = (e) => {
-    const ds = e.target.dataset;
-    setSelectedSpec((prev) => ({
-      ...prev,
-      [ds.spectype]: ds.specid,
-    }));
+    setSelectedSpecs((prev) => {
+      const specLevel = e.target.dataset["specLevel"];
+      const wanted = e.target.innerText;
+      if (prev[specLevel] === wanted) {
+        return prev;
+      }
+      // find spec level
+      const newState = [...prev];
+      newState[specLevel] = wanted;
+      const wantedSpec = specs.find(({ labels }) =>
+        labels.every((l) => newState.includes(l))
+      );
+      // check qty
+      if (wantedSpec?.stock) {
+        // if available, update state
+        setSelectedSpecId(wantedSpec.id);
+        return newState;
+      } else {
+        // if no, find available spec at current level
+        const otherAvailableSpec = specs
+          .filter(({ labels }) => labels.includes(wanted))
+          .find(({ stock }) => !!stock);
+        setSelectedSpecId(otherAvailableSpec.id);
+        return [...otherAvailableSpec.labels];
+      }
+    });
+  };
+
+  const isSoldout = (wanted, specLevel) => {
+    const otherSelected = selectedSpecs.filter((_, idx) => idx !== specLevel);
+    return specs
+      .filter(({ labels }) =>
+        otherSelected.every((selected) => labels.includes(selected))
+      )
+      .filter(({ labels }) => labels.includes(wanted))
+      .every(({ stock }) => stock === 0);
   };
 
   const handleClickMinus = () => {
-    if (quantity === 1) {
-      return;
-    }
-    setQuantity((prev) => (quantity === 1 ? 1 : prev - 1));
+    setQuantity((prev) => (quantity === 1 ? 1 : --prev));
   };
 
   const handleClickPlus = () => {
-    // TODO: Should check available stock
-    setQuantity((prev) => (quantity === 999 ? 999 : prev + 1));
+    const max = selectedSpec.stock;
+    setQuantity((prev) => (prev >= max ? max : ++prev));
   };
 
   const handleChangeQty = (e) => {
-    // TODO: Should check available stock
     const { value } = e.target;
-    if (value < 1) {
-      return;
-    }
-    setQuantity(value > 999 ? 999 : value);
+    const max = selectedSpec.stock;
+    setQuantity(value > max ? max : value <= 1 ? 1 : value);
+  };
+
+  const handleAddToCart = () => {
+    onClose();
+    onAddToCart(selectedSpecId);
   };
 
   const handleClose = () => {
     onClose();
   };
 
+  const selectedSpec = specs.find((spec) => spec.id === selectedSpecId);
+  const specLevels = specs
+    .map(({ labels }) => labels)
+    .reduce((acc, curr) => {
+      curr.forEach((item, idx) => {
+        if (!acc[idx]) {
+          acc[idx] = [];
+        }
+        if (!acc[idx].includes(item)) {
+          acc[idx].push(item);
+        }
+      });
+      return acc;
+    }, []);
   return (
     <>
       <div
@@ -50,9 +102,9 @@ export default function ProductPanel({ isOpen, onClose, data }) {
       >
         <div className={styles.panel}>
           <div className={styles.header}>
-            <img src={cover} alt="product cover" />
+            <img src={selectedSpec.images[0]} alt="product cover" />
             <div className={styles.title}>
-              <p className={styles.productName}>{name}</p>
+              <p className={styles.productName}>{selectedSpec.title}</p>
               <span className={styles.price}>$3,999</span>
             </div>
             <span className={styles.close} onClick={handleClose}>
@@ -61,31 +113,28 @@ export default function ProductPanel({ isOpen, onClose, data }) {
           </div>
           <hr />
           <div className={styles.content}>
-            {specs.map(({ type, desc, items }) => (
-              <div key={nanoid()} className={styles.specs}>
+            {specCategories.map(([type, desc], catIdx) => (
+              <div key={catIdx} className={styles.specs}>
                 <div className={styles.title}>
                   <p>{type}</p>
                   <span className={styles.desc}>{desc}</span>
                 </div>
                 <div className={styles.options}>
-                  {items.map(({ specId, text }) => {
-                    const isSoldout = !stocks.find(
-                      ({ specs, stock }) => specs.includes(specId) && stock > 0
-                    );
-                    const isSelected = selectedSpecs[type] === specId;
+                  {specLevels?.[catIdx].map((label, specIdx) => {
+                    const disabled = isSoldout(label, catIdx);
+                    const isSelected = label === selectedSpecs[catIdx];
                     return (
                       <span
-                        key={specId}
-                        data-spectype={type}
-                        data-specid={specId}
+                        key={specIdx}
+                        data-spec-level={catIdx}
                         className={`
-                          ${styles.option} 
-                          ${isSoldout ? styles.disabled : ""} 
+                          ${styles.option}
+                          ${disabled ? styles.disabled : ""}
                           ${isSelected ? styles.selected : ""}
                         `}
-                        onClick={handleClickSpec}
+                        onClick={!disabled ? handleClickSpec : () => {}}
                       >
-                        {text}
+                        {label}
                       </span>
                     );
                   })}
@@ -108,19 +157,22 @@ export default function ProductPanel({ isOpen, onClose, data }) {
                   type="number"
                   name=""
                   id=""
-                  min={1}
                   value={quantity}
                   onChange={handleChangeQty}
                 />
                 <button
-                  className={`${quantity === 999 ? styles.disabled : ""}`}
+                  className={`${
+                    quantity === selectedSpec.stock ? styles.disabled : ""
+                  }`}
                   onClick={handleClickPlus}
                 >
                   +
                 </button>
               </div>
             </div>
-            <button className={styles.addToCart}>加入購物車</button>
+            <button className={styles.addToCart} onClick={handleAddToCart}>
+              加入購物車
+            </button>
           </div>
         </div>
       </div>

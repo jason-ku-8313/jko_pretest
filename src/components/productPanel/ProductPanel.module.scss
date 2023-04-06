@@ -101,6 +101,7 @@
             border: solid 1px gray;
             border-radius: 10px;
             font-size: 14px;
+            cursor: pointer;
 
             &.selected {
               background-color: #ba2a43;
@@ -110,6 +111,7 @@
             &.disabled {
               color: #555555;
               border: solid 1px #555555;
+              cursor: default;
             }
           }
         }
@@ -148,10 +150,12 @@
             color: inherit;
             background-color: #42475d;
             border: none;
+            cursor: pointer;
 
             &.disabled {
               color: #666666;
               background-color: #434652;
+              cursor: default;
             }
           }
 

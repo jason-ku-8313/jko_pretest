@@ -1,75 +1,344 @@
+import { nanoid } from "nanoid";
+
 export const product = {
-  id: 1,
-  name: "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列",
+  pId: nanoid(),
   originalPrice: ["3,699", "4,699"],
   sellingPrice: ["2,999", "3,999"],
-  images: ["/product1.png", "/product2.png", "/product3.png", "/product4.png"],
   discounts: ["街口結帳享九折優惠", "訂單滿 399 免運費"],
   orderingInfos: [
     "請於訂單備註填寫您需要的球員",
     "請於訂單備註填寫您需要的球員",
     "球員款客製訂單出貨需要十四個工作天",
   ],
-  extraInfos: [
-    { type: "商品分類", text: "這邊可以填寫純文字內容。" },
-    {
-      type: "商品描述",
-      text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
-    },
-    {
-      type: "商品備註",
-      text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
-    },
+  specCategories: [
+    ["尺寸", "補充說明"],
+    ["顏色", "補充說明"],
   ],
   specs: [
     {
-      type: "尺寸",
-      desc: "補充說明",
-      items: [
-        { specId: "size1", text: "S" },
-        { specId: "size2", text: "M" },
-        { specId: "size3", text: "L" },
-        { specId: "size4", text: "XL" },
-        { specId: "size5", text: "XXL" },
+      id: nanoid(),
+      酷炫黑title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
+      price: "2,999",
+      stock: 0,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
       ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["S", "酷炫黑"],
     },
     {
-      type: "顏色",
-      desc: "補充說明",
-      items: [
-        { specId: "color1", text: "酷炫黑" },
-        { specId: "color2", text: "紫旋風" },
-        { specId: "color3", text: "暴風紅" },
-        { specId: "color4", text: "耀眼黃" },
-        { specId: "color5", text: "我是第二行選項" },
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
+      price: "2,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
       ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["M", "酷炫黑"],
     },
-  ],
-  stocks: [
-    { productId: 1, specs: ["size1", "color1"], stock: 10 },
-    { productId: 2, specs: ["size1", "color2"], stock: 10 },
-    { productId: 3, specs: ["size1", "color3"], stock: 0 },
-    { productId: 4, specs: ["size1", "color4"], stock: 10 },
-    { productId: 5, specs: ["size1", "color5"], stock: 10 },
-    { productId: 6, specs: ["size2", "color1"], stock: 0 },
-    { productId: 7, specs: ["size2", "color2"], stock: 0 },
-    { productId: 8, specs: ["size2", "color3"], stock: 0 },
-    { productId: 9, specs: ["size2", "color4"], stock: 0 },
-    { productId: 10, specs: ["size2", "color5"], stock: 0 },
-    { productId: 11, specs: ["size3", "color1"], stock: 10 },
-    { productId: 12, specs: ["size3", "color2"], stock: 10 },
-    { productId: 13, specs: ["size3", "color3"], stock: 0 },
-    { productId: 14, specs: ["size3", "color4"], stock: 10 },
-    { productId: 15, specs: ["size3", "color5"], stock: 10 },
-    { productId: 16, specs: ["size4", "color1"], stock: 10 },
-    { productId: 17, specs: ["size4", "color2"], stock: 10 },
-    { productId: 18, specs: ["size4", "color3"], stock: 0 },
-    { productId: 19, specs: ["size4", "color4"], stock: 10 },
-    { productId: 20, specs: ["size4", "color5"], stock: 10 },
-    { productId: 21, specs: ["size5", "color1"], stock: 10 },
-    { productId: 22, specs: ["size5", "color2"], stock: 10 },
-    { productId: 23, specs: ["size5", "color3"], stock: 0 },
-    { productId: 24, specs: ["size5", "color4"], stock: 10 },
-    { productId: 25, specs: ["size5", "color5"], stock: 10 },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
+      price: "2,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["L", "酷炫黑"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
+      price: "2,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["XL", "酷炫黑"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
+      price: "2,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["XXL", "酷炫黑"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
+      price: "3,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["S", "紫旋風"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
+      price: "3,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["M", "紫旋風"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列紫旋風[紫旋風]",
+      price: "3,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["L", "紫旋風"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
+      price: "3,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["XL", "紫旋風"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
+      price: "3,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["XXL", "紫旋風"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[暴風紅]",
+      price: "3,999",
+      stock: 0,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["S", "暴風紅"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[耀眼黃]",
+      price: "3,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["S", "耀眼黃"],
+    },
+    {
+      id: nanoid(),
+      title:
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[我是第二行選項]",
+      price: "3,999",
+      stock: 10,
+      images: [
+        "/product1.png",
+        "/product2.png",
+        "/product3.png",
+        "/product4.png",
+      ],
+      extraInfos: [
+        { type: "商品分類", text: "這邊可以填寫純文字內容。" },
+        {
+          type: "商品描述",
+          text: "靈感來自 90年代復古球衣，洞洞布料搭載拉克蘭袖設計，專業球衣打造休閒風尚，適合日常生活穿搭。",
+        },
+        {
+          type: "商品備註",
+          text: "請於訂單備註填寫您需要的號碼，若未填寫將以空白球衣寄出，客製化商品不接受退換貨。",
+        },
+      ],
+      labels: ["S", "我是第二行選項"],
+    },
   ],
 };

@@ -6,28 +6,35 @@ import ProductPanel from "../../components/productPanel/ProductPanel";
 import styles from "./Product.module.scss";
 
 export default function Product({
-  name,
   originalPrice,
   sellingPrice,
-  images,
   discounts,
   orderingInfos,
-  extraInfos,
+  specCategories,
   specs,
-  stocks,
 }) {
   const [showPanel, setShowPanel] = useState(false);
+  const [selectedSpecId, setSelectedSpecId] = useState(
+    specs.find((spec) => !!spec.stock)?.id
+  );
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const handleTogglePanel = () => {
     setShowPanel((prev) => !prev);
   };
 
+  const handleAddToCart = (id) => {
+    setSelectedSpecId(id);
+    setCartItemCount((prev) => prev + 1);
+  };
+
+  const selectedSpec = specs.find((spec) => spec.id === selectedSpecId);
   return (
     <div className={styles.product}>
-      <Slider data={images} />
+      <Slider data={selectedSpec.images} />
       <div className={styles.container}>
         <div className={styles.top}>
-          <h1>{name}</h1>
+          <h1>{selectedSpec.title}</h1>
           <div className={styles.prices}>
             <div className={styles.price}>
               ${sellingPrice[0]} - ${sellingPrice[1]}
@@ -59,20 +66,25 @@ export default function Product({
           </div>
         </div>
         <div className={styles.bottom}>
-          {extraInfos.map(({ type, text }, idx) => [
+          {selectedSpec.extraInfos.map(({ type, text }, idx) => [
             <div key={nanoid()} className={styles.productDetails}>
               <div className={styles.title}>{type}</div>
               <p className={styles.desc}>{text}</p>
             </div>,
-            idx < extraInfos.length - 1 && <hr key={nanoid()} />,
+            idx < selectedSpec.extraInfos.length - 1 && <hr key={nanoid()} />,
           ])}
         </div>
       </div>
-      <Footer onClickAddToCart={handleTogglePanel} />
+      <Footer
+        cartItemCount={cartItemCount}
+        onClickAddToCart={handleTogglePanel}
+      />
       <ProductPanel
-        onClose={handleTogglePanel}
         isOpen={showPanel}
-        data={{ name, specs, stocks, cover: images[0] }}
+        onClose={handleTogglePanel}
+        data={{ specCategories, specs }}
+        defaultSpec={selectedSpecId}
+        onAddToCart={handleAddToCart}
       />
     </div>
   );
