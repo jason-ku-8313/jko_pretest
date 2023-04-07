@@ -24,7 +24,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   - [X] 顯示售價及詳細資訊
   - [X] 產品資訊內容不一定完善
 - [X] 商品規格頁
-  - [ ] 將有庫存的商品加進購物車
+  - [X] 將有庫存的商品加進購物車
   - [X] 每種商品的規格不一定
   - [X] 數量可以按 +/-, 或是填入數字
   - [X] 選取後，點擊 “加入購物車”，顯示購物車的規格及數量
