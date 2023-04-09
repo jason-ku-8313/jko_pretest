@@ -1,38 +1,47 @@
-import React, { useState } from "react";
+import { useState, MouseEvent, TouchEvent, ReactEventHandler } from "react";
 import styles from "./Slider.module.scss";
 
-export default function Slider({ data }) {
+type Props = {
+  data: string[];
+};
+
+export default function Slider({ data }: Props) {
   const sliderLen = data.length;
   const [pageIdx, setPageIdx] = useState(0);
-  const [touchX, setTouchX] = useState(null);
+  const [touchX, setTouchX] = useState<number | null>(null);
 
-  const handleChangeSlideStart = (e) => {
-    let touchDown;
+  const handleChangeSlideStart: ReactEventHandler = (e) => {
+    let touchDown: number;
     if (e.type === "mousedown") {
-      touchDown = e.clientX;
+      touchDown = (e as MouseEvent).clientX;
     } else if (e.type === "touchstart") {
-      touchDown = e.touches[0].clientX;
+      touchDown = (e as TouchEvent).touches[0].clientX;
+    } else {
+      return;
     }
     setTouchX(touchDown);
   };
 
-  const handleChangeSlideEnd = (e) => {
+  const handleChangeSlideEnd: ReactEventHandler = (e) => {
     const touchDown = touchX;
     if (touchDown === null) {
       return;
     }
 
-    let currentTouch;
+    let currentTouch: number;
     if (e.type === "mouseup") {
-      currentTouch = e.clientX;
+      currentTouch = (e as MouseEvent).clientX;
     } else if (e.type === "touchmove") {
-      currentTouch = e.touches[0].clientX;
+      currentTouch = (e as TouchEvent).touches[0].clientX;
+    } else {
+      return;
     }
+
     const diff = touchDown - currentTouch;
-    if (diff > 10) {
+    if (diff > 5) {
       setPageIdx((prev) => (prev === sliderLen - 1 ? prev : ++prev));
     }
-    if (diff < -10) {
+    if (diff < -5) {
       setPageIdx((prev) => (prev === 0 ? prev : --prev));
     }
     setTouchX(null);
@@ -48,15 +57,16 @@ export default function Slider({ data }) {
         onMouseDown={handleChangeSlideStart}
         onMouseUp={handleChangeSlideEnd}
       >
-        {data.map((p, i) => (
-          <img
-            key={i}
-            src={p}
-            alt={`slide ${i + 1}`}
-            className={styles.slide}
-            draggable={false}
-          />
-        ))}
+        {!!data?.length &&
+          data.map((p, i) => (
+            <img
+              key={i}
+              src={p}
+              alt={`slide ${i + 1}`}
+              className={styles.slide}
+              draggable={false}
+            />
+          ))}
       </div>
       <div className={styles.pageNum}>{`${pageIdx + 1}/${sliderLen}`}</div>
     </div>

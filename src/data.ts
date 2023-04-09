@@ -1,7 +1,8 @@
 import { nanoid } from "nanoid";
+import { ProductApiData } from "./shared/interfact";
 
-export const product = {
-  pId: nanoid(),
+export const product: ProductApiData = {
+  id: `prod_${nanoid()}`,
   originalPrice: ["3,699", "4,699"],
   sellingPrice: ["2,999", "3,999"],
   discounts: ["街口結帳享九折優惠", "訂單滿 399 免運費"],
@@ -14,10 +15,14 @@ export const product = {
     ["尺寸", "補充說明"],
     ["顏色", "補充說明"],
   ],
+  specLabels: [
+    ["S", "M", "L", "XL", "XXL"],
+    ["酷炫黑", "紫旋風", "暴風紅", "耀眼黃", "我是第二行選項"],
+  ],
   specs: [
     {
-      id: nanoid(),
-      酷炫黑title:
+      id: `spec_${nanoid()}`,
+      title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
       price: "2,999",
       stock: 0,
@@ -41,7 +46,7 @@ export const product = {
       labels: ["S", "酷炫黑"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
       price: "2,999",
@@ -66,7 +71,7 @@ export const product = {
       labels: ["M", "酷炫黑"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
       price: "2,999",
@@ -91,7 +96,7 @@ export const product = {
       labels: ["L", "酷炫黑"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
       price: "2,999",
@@ -116,7 +121,7 @@ export const product = {
       labels: ["XL", "酷炫黑"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[酷炫黑]",
       price: "2,999",
@@ -141,7 +146,7 @@ export const product = {
       labels: ["XXL", "酷炫黑"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
       price: "3,999",
@@ -166,7 +171,7 @@ export const product = {
       labels: ["S", "紫旋風"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
       price: "3,999",
@@ -191,9 +196,9 @@ export const product = {
       labels: ["M", "紫旋風"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
-        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列紫旋風[紫旋風]",
+        "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
       price: "3,999",
       stock: 10,
       images: [
@@ -216,7 +221,7 @@ export const product = {
       labels: ["L", "紫旋風"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
       price: "3,999",
@@ -241,7 +246,7 @@ export const product = {
       labels: ["XL", "紫旋風"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[紫旋風]",
       price: "3,999",
@@ -266,7 +271,7 @@ export const product = {
       labels: ["XXL", "紫旋風"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[暴風紅]",
       price: "3,999",
@@ -291,7 +296,7 @@ export const product = {
       labels: ["S", "暴風紅"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[耀眼黃]",
       price: "3,999",
@@ -316,7 +321,7 @@ export const product = {
       labels: ["S", "耀眼黃"],
     },
     {
-      id: nanoid(),
+      id: `spec_${nanoid()}`,
       title:
         "LN 新竹街口攻城獅台灣封城紫色炫風聯名款限定發售復古球衣系列[我是第二行選項]",
       price: "3,999",

@@ -1,9 +1,19 @@
-import React, { useState } from "react";
-import { nanoid } from "nanoid";
+import { useState } from "react";
 import Slider from "../../components/slider/Slider";
 import Footer from "../../components/footer/Footer";
 import ProductPanel from "../../components/productPanel/ProductPanel";
 import styles from "./Product.module.scss";
+import { ProductSpec } from "../../shared/interfact";
+
+type Props = {
+  originalPrice: string[];
+  sellingPrice: string[];
+  discounts: string[];
+  orderingInfos: string[];
+  specCategories: string[][];
+  specLabels: string[][];
+  specs: ProductSpec[];
+};
 
 export default function Product({
   originalPrice,
@@ -11,10 +21,11 @@ export default function Product({
   discounts,
   orderingInfos,
   specCategories,
+  specLabels,
   specs,
-}) {
+}: Props) {
   const [showPanel, setShowPanel] = useState(false);
-  const [selectedSpecId, setSelectedSpecId] = useState(
+  const [selectedSpecId, setSelectedSpecId] = useState<string | undefined>(
     specs.find((spec) => !!spec.stock)?.id
   );
   const [cartItemCount, setCartItemCount] = useState(0);
@@ -23,18 +34,21 @@ export default function Product({
     setShowPanel((prev) => !prev);
   };
 
-  const handleAddToCart = (id) => {
+  const handleAddToCart = (id: string) => {
     setSelectedSpecId(id);
     setCartItemCount((prev) => prev + 1);
   };
 
-  const selectedSpec = specs.find((spec) => spec.id === selectedSpecId);
+  const selectedSpec = specs.find(({ id }) => id === selectedSpecId);
+  if (!selectedSpec) {
+    return <div>Product Not Found</div>;
+  }
   return (
     <div className={styles.product}>
       <Slider data={selectedSpec.images} />
       <div className={styles.container}>
         <div className={styles.top}>
-          <h1>{selectedSpec.title}</h1>
+          <h1>{selectedSpec?.title}</h1>
           <div className={styles.prices}>
             <div className={styles.price}>
               ${sellingPrice[0]} - ${sellingPrice[1]}
@@ -48,8 +62,8 @@ export default function Product({
             )}
           </div>
           <div className={styles.discount}>
-            {discounts.map((text) => (
-              <div key={nanoid()} className={styles.label}>
+            {discounts.map((text, idx) => (
+              <div key={`discounts-${idx}`} className={styles.label}>
                 {text}
               </div>
             ))}
@@ -57,8 +71,8 @@ export default function Product({
           <hr />
           <div className={styles.orderingInfos}>
             <ul>
-              {orderingInfos.map((text) => (
-                <li key={nanoid()} className={styles.message}>
+              {orderingInfos.map((text, idx) => (
+                <li key={`orderingInfos-${idx}`} className={styles.message}>
                   {text}
                 </li>
               ))}
@@ -66,26 +80,31 @@ export default function Product({
           </div>
         </div>
         <div className={styles.bottom}>
-          {selectedSpec.extraInfos.map(({ type, text }, idx) => [
-            <div key={nanoid()} className={styles.productDetails}>
+          {selectedSpec?.extraInfos.map(({ type, text }, idx) => [
+            <div key={type} className={styles.productDetails}>
               <div className={styles.title}>{type}</div>
               <p className={styles.desc}>{text}</p>
             </div>,
-            idx < selectedSpec.extraInfos.length - 1 && <hr key={nanoid()} />,
+            idx < selectedSpec.extraInfos.length - 1 && (
+              <hr key={`${type}-hr`} />
+            ),
           ])}
         </div>
       </div>
       <Footer
+        isSoldout={!selectedSpec.stock}
         cartItemCount={cartItemCount}
         onClickAddToCart={handleTogglePanel}
       />
-      <ProductPanel
-        isOpen={showPanel}
-        onClose={handleTogglePanel}
-        data={{ specCategories, specs }}
-        defaultSpec={selectedSpecId}
-        onAddToCart={handleAddToCart}
-      />
+      {selectedSpecId && (
+        <ProductPanel
+          isOpen={showPanel}
+          onClose={handleTogglePanel}
+          data={{ specCategories, specLabels, specs }}
+          defaultSpecId={selectedSpecId}
+          onAddToCart={handleAddToCart}
+        />
+      )}
     </div>
   );
 }

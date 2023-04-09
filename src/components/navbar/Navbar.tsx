@@ -1,4 +1,3 @@
-import React from "react";
 import { SlArrowLeft } from "react-icons/sl";
 import styles from "./Navbar.module.scss";
 

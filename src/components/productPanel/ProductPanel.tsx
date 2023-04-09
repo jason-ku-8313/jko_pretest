@@ -1,58 +1,91 @@
-import React, { useEffect, useState } from "react";
+import { useState, ReactEventHandler, ChangeEventHandler } from "react";
 import { IoClose } from "react-icons/io5";
 import styles from "./ProductPanel.module.scss";
+import { ProductSpec } from "../../shared/interfact";
+
+type Props = {
+  isOpen: boolean;
+  onClose: Function;
+  data: {
+    specCategories: string[][];
+    specLabels: string[][];
+    specs: ProductSpec[];
+  };
+  defaultSpecId: string;
+  onAddToCart: Function;
+};
+
+const findSpecById = (specs: ProductSpec[], target: string): ProductSpec => {
+  const spec = specs.find(({ id }) => id === target);
+  if (!spec) {
+    throw Error(`Spec [${target}] not found!`);
+  }
+  return spec;
+};
 
 export default function ProductPanel({
   isOpen,
   onClose,
   data,
-  defaultSpec,
+  defaultSpecId,
   onAddToCart,
-}) {
-  const [selectedSpecId, setSelectedSpecId] = useState(defaultSpec);
-  const { specCategories, specs } = data;
-  const [selectedSpecs, setSelectedSpecs] = useState([
-    ...specs.find(({ id }) => id === defaultSpec).labels,
-  ]);
+}: Props) {
+  const { specCategories, specLabels, specs } = data;
+  const [selectedSpecId, setSelectedSpecId] = useState(defaultSpecId);
   const [quantity, setQuantity] = useState(1);
 
-  const handleClickSpec = (e) => {
-    setSelectedSpecs((prev) => {
-      const specLevel = e.target.dataset["specLevel"];
-      const wanted = e.target.innerText;
-      if (prev[specLevel] === wanted) {
-        return prev;
-      }
-      // find spec level
-      const newState = [...prev];
-      newState[specLevel] = wanted;
-      const wantedSpec = specs.find(({ labels }) =>
-        labels.every((l) => newState.includes(l))
-      );
-      // check qty
-      if (wantedSpec?.stock) {
-        // if available, update state
-        setSelectedSpecId(wantedSpec.id);
-        return newState;
-      } else {
-        // if no, find available spec at current level
-        const otherAvailableSpec = specs
-          .filter(({ labels }) => labels.includes(wanted))
+  const handleClickSpec: ReactEventHandler<HTMLSpanElement> = (e) => {
+    const eventTarget = e.currentTarget;
+    setSelectedSpecId((prev) => {
+      try {
+        if (eventTarget.getAttribute("data-spec-level") === null) {
+          throw Error("data-spec-level not found!");
+        }
+        const specLevel = Number(eventTarget.getAttribute("data-spec-level"));
+        const clicked = eventTarget.innerText;
+        const prevSpec = findSpecById(specs, prev);
+        const wantedSpecLabels = prevSpec.labels.map((_, idx) =>
+          idx === specLevel ? clicked : _
+        );
+        const wantedSpec = specs.find(({ labels }) =>
+          wantedSpecLabels.every((l) => labels.includes(l))
+        );
+
+        if (wantedSpec && wantedSpec.stock) {
+          return wantedSpec.id;
+        }
+
+        const similarSpecLabels = wantedSpecLabels.slice(0, specLevel + 1);
+        const similarSpec = specs
+          .filter(({ labels }) =>
+            similarSpecLabels.every((l) => labels.includes(l))
+          )
           .find(({ stock }) => !!stock);
-        setSelectedSpecId(otherAvailableSpec.id);
-        return [...otherAvailableSpec.labels];
+        return similarSpec?.id ?? prev;
+      } catch (err) {
+        console.log("[handleClickSpec] Error Occurred: ", err);
+        return prev;
       }
     });
   };
 
-  const isSoldout = (wanted, specLevel) => {
-    const otherSelected = selectedSpecs.filter((_, idx) => idx !== specLevel);
-    return specs
-      .filter(({ labels }) =>
-        otherSelected.every((selected) => labels.includes(selected))
-      )
-      .filter(({ labels }) => labels.includes(wanted))
-      .every(({ stock }) => stock === 0);
+  const isSoldout = (wanted: string, specLevel: number) => {
+    const isRootCategory = specLevel === 0;
+    if (isRootCategory) {
+      return specs
+        .filter(({ labels }) => labels.includes(wanted))
+        .every(({ stock }) => !stock);
+    } else {
+      const wantedCombination = selectedSpec.labels
+        .slice(0, specLevel)
+        .concat(wanted);
+      const availableSpec = specs
+        .filter(({ labels }) =>
+          wantedCombination.every((label) => labels.includes(label))
+        )
+        .find(({ stock }) => !!stock);
+      return !availableSpec;
+    }
   };
 
   const handleClickMinus = () => {
@@ -64,8 +97,8 @@ export default function ProductPanel({
     setQuantity((prev) => (prev >= max ? max : ++prev));
   };
 
-  const handleChangeQty = (e) => {
-    const { value } = e.target;
+  const handleChangeQty: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = Number(e.target.value);
     const max = selectedSpec.stock;
     setQuantity(value > max ? max : value <= 1 ? 1 : value);
   };
@@ -79,20 +112,7 @@ export default function ProductPanel({
     onClose();
   };
 
-  const selectedSpec = specs.find((spec) => spec.id === selectedSpecId);
-  const specLevels = specs
-    .map(({ labels }) => labels)
-    .reduce((acc, curr) => {
-      curr.forEach((item, idx) => {
-        if (!acc[idx]) {
-          acc[idx] = [];
-        }
-        if (!acc[idx].includes(item)) {
-          acc[idx].push(item);
-        }
-      });
-      return acc;
-    }, []);
+  const selectedSpec = findSpecById(specs, selectedSpecId);
   return (
     <>
       <div
@@ -105,7 +125,7 @@ export default function ProductPanel({
             <img src={selectedSpec.images[0]} alt="product cover" />
             <div className={styles.title}>
               <p className={styles.productName}>{selectedSpec.title}</p>
-              <span className={styles.price}>$3,999</span>
+              <span className={styles.price}>${selectedSpec.price}</span>
             </div>
             <span className={styles.close} onClick={handleClose}>
               <IoClose />
@@ -114,18 +134,18 @@ export default function ProductPanel({
           <hr />
           <div className={styles.content}>
             {specCategories.map(([type, desc], catIdx) => (
-              <div key={catIdx} className={styles.specs}>
+              <div key={type} className={styles.specs}>
                 <div className={styles.title}>
                   <p>{type}</p>
                   <span className={styles.desc}>{desc}</span>
                 </div>
                 <div className={styles.options}>
-                  {specLevels?.[catIdx].map((label, specIdx) => {
+                  {specLabels[catIdx].map((label) => {
                     const disabled = isSoldout(label, catIdx);
-                    const isSelected = label === selectedSpecs[catIdx];
+                    const isSelected = selectedSpec.labels.includes(label);
                     return (
                       <span
-                        key={specIdx}
+                        key={label}
                         data-spec-level={catIdx}
                         className={`
                           ${styles.option}
