@@ -1,7 +1,10 @@
 import styles from "./Footer.module.scss";
 import cart from "../../assets/cart.png";
 import { useContext } from "react";
-import shoppingCartContext from "../../context/shopping-cart.context";
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/shopping-cart.context";
 
 type Props = {
   isSoldout: boolean;
@@ -9,7 +12,9 @@ type Props = {
 };
 
 export default function Footer({ isSoldout, onClickAddToCart }: Props) {
-  const shoppingCart = useContext(shoppingCartContext);
+  const { shoppingCart } = useContext(
+    ShoppingCartContext
+  ) as ShoppingCartContextType;
 
   const handleClickAddToCart = () => {
     onClickAddToCart();

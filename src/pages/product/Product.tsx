@@ -1,9 +1,13 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useContext, useState } from "react";
 import Slider from "../../components/slider/Slider";
 import Footer from "../../components/footer/Footer";
 import ProductPanel from "../../components/productPanel/ProductPanel";
 import styles from "./Product.module.scss";
-import { ProductSpec, ShoppingCart } from "../../shared/interface";
+import { ProductSpec } from "../../shared/interface";
+import {
+  ShoppingCartContext,
+  ShoppingCartContextType,
+} from "../../context/shopping-cart.context";
 
 type Props = {
   id: string;
@@ -14,7 +18,6 @@ type Props = {
   specCategories: string[][];
   specLabels: string[][];
   specs: ProductSpec[];
-  onAddToCart: Dispatch<SetStateAction<ShoppingCart>>;
 };
 
 export default function Product({
@@ -26,12 +29,14 @@ export default function Product({
   specCategories,
   specLabels,
   specs,
-  onAddToCart,
 }: Props) {
   const [showPanel, setShowPanel] = useState(false);
   const [selectedSpecId, setSelectedSpecId] = useState<string | undefined>(
     specs.find((spec) => !!spec.stock)?.id
   );
+  const { updateCartItem } = useContext(
+    ShoppingCartContext
+  ) as ShoppingCartContextType;
 
   const handleTogglePanel = () => {
     setShowPanel((prev) => !prev);
@@ -39,19 +44,7 @@ export default function Product({
 
   const handleAddToCart = (specId: string, quantity: number) => {
     setSelectedSpecId(specId);
-    onAddToCart(({ items }) => {
-      const clone = [...items];
-      const existing = clone.find(
-        (item) => item.productId === productId && item.specId === specId
-      );
-
-      if (!!existing) {
-        existing.quantity = quantity;
-      } else {
-        clone.push({ productId, specId, quantity });
-      }
-      return { items: clone };
-    });
+    updateCartItem(productId, specId, quantity);
   };
 
   const selectedSpec = specs.find(({ id }) => id === selectedSpecId);
