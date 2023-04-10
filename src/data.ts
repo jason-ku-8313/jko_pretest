@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { ProductApiData } from "./shared/interfact";
+import { ProductApiData } from "./shared/interface";
 
 export const product: ProductApiData = {
   id: `prod_${nanoid()}`,

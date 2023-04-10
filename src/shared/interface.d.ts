@@ -23,3 +23,13 @@ export interface ProductExtraInfo {
   type: string;
   text: string;
 }
+
+export interface ShoppingCart {
+  items: CartItem[];
+}
+
+export interface CartItem {
+  productId: string;
+  specId: string;
+  quantity: number;
+}

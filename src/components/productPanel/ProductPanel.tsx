@@ -1,7 +1,7 @@
 import { useState, ReactEventHandler, ChangeEventHandler } from "react";
 import { IoClose } from "react-icons/io5";
 import styles from "./ProductPanel.module.scss";
-import { ProductSpec } from "../../shared/interfact";
+import { ProductSpec } from "../../shared/interface";
 
 type Props = {
   isOpen: boolean;
@@ -105,7 +105,7 @@ export default function ProductPanel({
 
   const handleAddToCart = () => {
     onClose();
-    onAddToCart(selectedSpecId);
+    onAddToCart(selectedSpecId, quantity);
   };
 
   const handleClose = () => {
