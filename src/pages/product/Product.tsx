@@ -46,7 +46,7 @@ export default function Product({ id: productId }: Props) {
         console.error(err);
       }
     })();
-  }, []);
+  }, [productId]);
 
   const handleTogglePanel = () => {
     setShowPanel((prev) => !prev);
