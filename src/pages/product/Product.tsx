@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import Slider from "../../components/slider/Slider";
-import Footer from "../../components/footer/Footer";
-import ProductPanel from "../../components/productPanel/ProductPanel";
+import Slider from "../../components/slider";
+import Footer from "../../components/footer";
+import ProductPanel from "../../components/productPanel";
 import Spinner from "../../components/spinner";
 import styles from "./Product.module.scss";
 import type { ProductApiData } from "../../shared/interface";
