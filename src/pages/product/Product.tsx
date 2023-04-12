@@ -17,7 +17,7 @@ type Props = {
 const getProductApiData = async (
   productId: string
 ): Promise<ProductApiData> => {
-  const resp = await fetch(`http://localhost:3000/api/product/${productId}`);
+  const resp = await fetch(`/api/product/${productId}`);
   if (resp.status !== 200) {
     throw Error(
       `An error occurred during fetching Product data. response-status[${resp.status}]`
