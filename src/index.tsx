@@ -4,7 +4,7 @@ import type { SetupWorker } from "msw";
 import App from "./App";
 import "./index.css";
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.REACT_APP_MSW === "TRUE") {
   const { worker } = require("./mocks/browser");
   (worker as SetupWorker).start({ onUnhandledRequest: "bypass" });
 }
