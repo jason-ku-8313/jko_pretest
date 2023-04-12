@@ -1,7 +1,6 @@
 import Navbar from "./components/navbar/Navbar";
 import Product from "./pages/product/Product";
 import styles from "./App.module.scss";
-import { product } from "./data";
 import ShoppingCartProvider from "./context/shopping-cart.context";
 
 function App() {
@@ -9,7 +8,7 @@ function App() {
     <div className={styles.app}>
       <Navbar />
       <ShoppingCartProvider>
-        <Product {...product} />
+        <Product id={"prod_1"} />
       </ShoppingCartProvider>
     </div>
   );

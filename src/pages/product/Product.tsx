@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Slider from "../../components/slider/Slider";
 import Footer from "../../components/footer/Footer";
 import ProductPanel from "../../components/productPanel/ProductPanel";
+import Spinner from "../../components/spinner";
 import styles from "./Product.module.scss";
-import { ProductSpec } from "../../shared/interface";
+import type { ProductApiData } from "../../shared/interface";
 import {
   ShoppingCartContext,
   ShoppingCartContextType,
@@ -11,32 +12,41 @@ import {
 
 type Props = {
   id: string;
-  originalPrice: string[];
-  sellingPrice: string[];
-  discounts: string[];
-  orderingInfos: string[];
-  specCategories: string[][];
-  specLabels: string[][];
-  specs: ProductSpec[];
 };
 
-export default function Product({
-  id: productId,
-  originalPrice,
-  sellingPrice,
-  discounts,
-  orderingInfos,
-  specCategories,
-  specLabels,
-  specs,
-}: Props) {
+const getProductApiData = async (
+  productId: string
+): Promise<ProductApiData> => {
+  const resp = await fetch(`http://localhost:3000/api/product/${productId}`);
+  if (resp.status !== 200) {
+    throw Error(
+      `An error occurred during fetching Product data. response-status[${resp.status}]`
+    );
+  }
+  return await resp.json();
+};
+
+export default function Product({ id: productId }: Props) {
+  const [product, setProduct] = useState<ProductApiData | null>(null);
+  const [selectedSpecId, setSelectedSpecId] = useState<string | null>(null);
   const [showPanel, setShowPanel] = useState(false);
-  const [selectedSpecId, setSelectedSpecId] = useState<string | undefined>(
-    specs.find((spec) => !!spec.stock)?.id
-  );
   const { updateCartItem } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const product = await getProductApiData(productId);
+        const defaultSpec =
+          product.specs.find((spec) => !!spec.stock)?.id || null;
+        setProduct(product);
+        setSelectedSpecId(defaultSpec);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+  }, []);
 
   const handleTogglePanel = () => {
     setShowPanel((prev) => !prev);
@@ -47,10 +57,24 @@ export default function Product({
     updateCartItem(productId, specId, quantity);
   };
 
-  const selectedSpec = specs.find(({ id }) => id === selectedSpecId);
-  if (!selectedSpec) {
-    return <div>Product Not Found</div>;
+  const selectedSpec = product?.specs.find(({ id }) => id === selectedSpecId);
+  if (!product || !selectedSpec) {
+    return (
+      <div className={styles.product}>
+        <Spinner />
+      </div>
+    );
   }
+
+  const {
+    originalPrice,
+    sellingPrice,
+    discounts,
+    orderingInfos,
+    specCategories,
+    specLabels,
+    specs,
+  } = product;
   return (
     <div className={styles.product}>
       <Slider data={selectedSpec.images} />
