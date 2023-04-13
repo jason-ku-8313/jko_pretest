@@ -1,5 +1,5 @@
-import Navbar from "./components/navbar";
-import Product from "./pages/product";
+import Navbar from "./components/Navbar";
+import Product from "./pages/Product";
 import styles from "./App.module.scss";
 import ShoppingCartProvider from "./context/shopping-cart.context";
 
