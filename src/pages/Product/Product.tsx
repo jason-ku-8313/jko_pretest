@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { useQuery } from "react-query";
 import Slider from "../../components/Slider";
 import Footer from "../../components/Footer";
 import ProductPanel from "../../components/ProductPanel";
@@ -9,44 +10,22 @@ import {
   ShoppingCartContext,
   ShoppingCartContextType,
 } from "../../context/shopping-cart.context";
+import { getProduct } from "../../api/product";
 
 type Props = {
   id: string;
 };
 
-const getProductApiData = async (
-  productId: string
-): Promise<ProductApiData> => {
-  const resp = await fetch(`/api/product/${productId}`);
-  if (resp.status !== 200) {
-    throw Error(
-      `An error occurred during fetching Product data. response-status[${resp.status}]`
-    );
-  }
-  return await resp.json();
-};
-
 export default function Product({ id: productId }: Props) {
-  const [product, setProduct] = useState<ProductApiData | null>(null);
   const [selectedSpecId, setSelectedSpecId] = useState<string | null>(null);
   const [showPanel, setShowPanel] = useState(false);
   const { updateCartItem } = useContext(
     ShoppingCartContext
   ) as ShoppingCartContextType;
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const product = await getProductApiData(productId);
-        const defaultSpec =
-          product.specs.find((spec) => !!spec.stock)?.id || null;
-        setProduct(product);
-        setSelectedSpecId(defaultSpec);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
-  }, [productId]);
+  const { isLoading, isError, data, error } = useQuery<ProductApiData, Error>(
+    ["product", productId],
+    () => getProduct(productId)
+  );
 
   const handleTogglePanel = () => {
     setShowPanel((prev) => !prev);
@@ -57,8 +36,7 @@ export default function Product({ id: productId }: Props) {
     updateCartItem(productId, specId, quantity);
   };
 
-  const selectedSpec = product?.specs.find(({ id }) => id === selectedSpecId);
-  if (!product || !selectedSpec) {
+  if (isLoading) {
     return (
       <div className={styles.product}>
         <Spinner />
@@ -66,6 +44,17 @@ export default function Product({ id: productId }: Props) {
     );
   }
 
+  if (isError) {
+    throw error;
+  }
+
+  const product = data as ProductApiData;
+  const selectedSpec = selectedSpecId
+    ? product.specs.find(({ id }) => id === selectedSpecId)
+    : product.specs.find((spec) => !!spec.stock);
+  if (!selectedSpec) {
+    throw Error(`All specs in product [${productId}] have been soldout.`);
+  }
   const {
     originalPrice,
     sellingPrice,
@@ -127,12 +116,12 @@ export default function Product({ id: productId }: Props) {
         isSoldout={!selectedSpec.stock}
         onClickAddToCart={handleTogglePanel}
       />
-      {selectedSpecId && (
+      {selectedSpec && (
         <ProductPanel
           isOpen={showPanel}
           onClose={handleTogglePanel}
           data={{ specCategories, specLabels, specs }}
-          defaultSpecId={selectedSpecId}
+          defaultSpecId={selectedSpec.id}
           onAddToCart={handleAddToCart}
         />
       )}
