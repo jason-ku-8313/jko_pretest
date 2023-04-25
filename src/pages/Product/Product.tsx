@@ -116,15 +116,13 @@ export default function Product({ id: productId }: Props) {
         isSoldout={!selectedSpec.stock}
         onClickAddToCart={handleTogglePanel}
       />
-      {selectedSpec && (
-        <ProductPanel
-          isOpen={showPanel}
-          onClose={handleTogglePanel}
-          data={{ specCategories, specLabels, specs }}
-          defaultSpecId={selectedSpec.id}
-          onAddToCart={handleAddToCart}
-        />
-      )}
+      <ProductPanel
+        isOpen={showPanel}
+        onClose={handleTogglePanel}
+        data={{ specCategories, specLabels, specs }}
+        defaultSpecId={selectedSpec.id}
+        onAddToCart={handleAddToCart}
+      />
     </div>
   );
 }
