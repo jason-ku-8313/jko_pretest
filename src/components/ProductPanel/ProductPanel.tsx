@@ -112,14 +112,14 @@ export default function ProductPanel({
     onClose();
   };
 
+  if (!isOpen) {
+    return null;
+  }
+
   const selectedSpec = findSpecById(specs, selectedSpecId);
   return (
     <>
-      <div
-        className={`${styles.productPanel} ${styles.fadeIn} ${
-          !isOpen ? styles.hidden : ""
-        }`}
-      >
+      <div className={`${styles.productPanel} ${styles.fadeIn}`}>
         <div className={styles.panel}>
           <div className={styles.header}>
             <img src={selectedSpec.images[0]} alt="product cover" />
@@ -196,10 +196,7 @@ export default function ProductPanel({
           </div>
         </div>
       </div>
-      <div
-        className={`${styles.overlay} ${!isOpen && styles.hidden}`}
-        onClick={handleClose}
-      />
+      <div className={`${styles.overlay}`} onClick={handleClose} />
     </>
   );
 }
