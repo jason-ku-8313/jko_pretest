@@ -57,11 +57,11 @@ export default function Slider({ data }: Props) {
         onMouseDown={handleChangeSlideStart}
         onMouseUp={handleChangeSlideEnd}
       >
-        {!!data?.length &&
-          data.map((p, i) => (
+        {!!sliderLen &&
+          data.map((src, i) => (
             <img
               key={i}
-              src={p}
+              src={src}
               alt={`slide ${i + 1}`}
               className={styles.slide}
               draggable={false}
